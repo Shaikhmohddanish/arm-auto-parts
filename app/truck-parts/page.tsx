@@ -1,16 +1,12 @@
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent } from "@/components/ui/card"
 import { Truck, Shield, Package, RotateCcw, Phone, Mail } from "lucide-react"
-import { parts } from "@/lib/parts"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { TopBrands } from "@/components/top-brands"
+import { PartsSearchForm } from "@/components/parts-search-form"
 
 export default function TruckPartsPage() {
-  const brands = ["Audi", "Ford", "Chevrolet", "Porsche", "GMC", "Dodge", "GM", "Toyota", "BMW", "Mercedes Benz"]
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -30,76 +26,10 @@ export default function TruckPartsPage() {
           </div>
 
           {/* Search Form */}
-          <Card className="max-w-4xl mx-auto">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-semibold mb-6 text-center">Find Your Right Part</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Array.from({ length: 30 }, (_, i) => 2024 - i).map((year) => (
-                      <SelectItem key={year} value={year.toString()}>
-                        {year}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Make" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {brands.map((brand) => (
-                      <SelectItem key={brand} value={brand.toLowerCase()}>
-                        {brand}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Model" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="model1">Model 1</SelectItem>
-                    <SelectItem value="model2">Model 2</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Part" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-60">
-                    {parts.map((part, index) => (
-                      <SelectItem key={index} value={part.toLowerCase().replace(/\s+/g, '-')}>
-                        {part}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <Input placeholder="First Name" />
-                <Input placeholder="Last Name" />
-                <Input type="email" placeholder="Your Email" />
-                <Input type="tel" placeholder="xxx-xxx-xxxx" />
-              </div>
-
-              <p className="text-sm text-muted-foreground mb-4 text-center">
-                By submitting this form, you agree to receive text messages at anytime
-              </p>
-
-              <Button className="w-full" size="lg">
-                Get Quote
-              </Button>
-            </CardContent>
-          </Card>
+          <PartsSearchForm 
+            variant="light" 
+            className="max-w-4xl mx-auto"
+          />
         </div>
       </section>
 
@@ -132,13 +62,28 @@ export default function TruckPartsPage() {
               <div className="mb-12">
                 <h3 className="text-2xl font-semibold mb-6 text-center">Top Brands We Are Serving</h3>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                  {brands.map((brand) => (
-                    <Card key={brand} className="text-center p-4 hover:shadow-md transition-shadow">
+                  {[
+                    { name: "Audi", logo: "/images/audi.webp" },
+                    { name: "Ford", logo: "/images/ford.webp" },
+                    { name: "Chevrolet", logo: "/images/chevolet.webp" },
+                    { name: "Porsche", logo: "/images/porche.webp" },
+                    { name: "GMC", logo: "/images/gmc.webp" },
+                    { name: "Dodge", logo: "/images/dodge.webp" },
+                    { name: "GM", logo: "/images/gm.webp" },
+                    { name: "Toyota", logo: "/images/tyota.webp" },
+                    { name: "BMW", logo: "/images/bmw.webp" },
+                    { name: "Mercedes Benz", logo: "/images/mercedes.webp" }
+                  ].map((brand) => (
+                    <Card key={brand.name} className="text-center p-4 hover:shadow-md transition-shadow">
                       <CardContent className="p-0">
-                        <div className="w-12 h-12 mx-auto mb-2 bg-primary/10 rounded-full flex items-center justify-center">
-                          <Truck className="w-6 h-6 text-primary" />
+                        <div className="w-16 h-16 mx-auto mb-2 bg-white rounded-lg flex items-center justify-center shadow-sm border border-gray-100">
+                          <img
+                            src={brand.logo}
+                            alt={`${brand.name} logo`}
+                            className="w-12 h-12 object-contain"
+                          />
                         </div>
-                        <p className="font-medium">{brand}</p>
+                        <p className="font-medium text-sm">{brand.name}</p>
                       </CardContent>
                     </Card>
                   ))}

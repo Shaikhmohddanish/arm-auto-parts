@@ -2,18 +2,12 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { TopBrands } from "@/components/top-brands"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Car, Shield, Package, Truck, CheckCircle, Star } from "lucide-react"
-import { parts } from "@/lib/parts"
-import { brandModels } from "@/lib/brand-models"
+import { PartsSearchForm } from "@/components/parts-search-form"
 
 export default function InteriorPartsPage() {
-  const brands = Object.keys(brandModels)
-  const currentYear = new Date().getFullYear()
-  const years = Array.from({ length: 30 }, (_, i) => currentYear - i)
 
   const stats = [
     { number: "45k+", label: "Happy Customer" },
@@ -58,76 +52,10 @@ export default function InteriorPartsPage() {
           </div>
 
           {/* Search Form */}
-          <Card className="max-w-4xl mx-auto">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-semibold mb-6 text-center">Find Your Right Part</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {years.map((year) => (
-                      <SelectItem key={year} value={year.toString()}>
-                        {year}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Make" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-60">
-                    {brands.map((brand) => (
-                      <SelectItem key={brand} value={brand}>
-                        {brand}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Model" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="model1">Model 1</SelectItem>
-                    <SelectItem value="model2">Model 2</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Part" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-60">
-                    {parts.map((part, index) => (
-                      <SelectItem key={index} value={part.toLowerCase().replace(/\s+/g, '-')}>
-                        {part}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <Input placeholder="First Name" />
-                <Input placeholder="Last Name" />
-                <Input type="email" placeholder="Your Email" />
-                <Input type="tel" placeholder="xxx-xxx-xxxx" />
-              </div>
-
-              <p className="text-sm text-muted-foreground mb-4 text-center">
-                By submitting this form, you agree to receive text messages at anytime
-              </p>
-
-              <Button className="w-full bg-red-600 hover:bg-red-700" size="lg">
-                Find Parts
-              </Button>
-            </CardContent>
-          </Card>
+          <PartsSearchForm 
+            variant="light" 
+            className="max-w-4xl mx-auto"
+          />
         </div>
       </section>
 

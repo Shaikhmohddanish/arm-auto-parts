@@ -64,31 +64,137 @@ export function PartsSearchForm({
     : "bg-white border-gray-300"
     
   const inputClasses = isDark
-    ? "bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
-    : "bg-white border-gray-300 placeholder:text-gray-500"
+    ? "bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 h-11 sm:h-10"
+    : "bg-white border-gray-300 placeholder:text-gray-500 h-11 sm:h-10"
     
   const labelClasses = isDark ? "text-white" : "text-gray-900"
   const textClasses = isDark ? "text-gray-300" : "text-gray-600"
   const disclaimerClasses = isDark ? "text-gray-400" : "text-gray-500"
 
   return (
-    <div className={`rounded-lg p-8 ${containerClasses} ${className}`}>
-      <div className="text-center mb-8">
-        <h2 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{title}</h2>
-        <p className={textClasses}>{subtitle}</p>
+    <div className={`rounded-lg p-4 sm:p-6 lg:p-8 ${containerClasses} ${className}`}>
+      <div className="text-center mb-6 sm:mb-8">
+        <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{title}</h2>
+        <p className={`text-sm sm:text-base ${textClasses}`}>{subtitle}</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         {/* Vehicle Selection Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="space-y-2">
+        {/* Mobile: 2 rows, 2 columns each. Tablet/Desktop: 1 row, 4 columns. */}
+        <div className="grid grid-cols-1 gap-4 sm:hidden">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              {showLabels && (
+                <Label htmlFor="year" className={`${labelClasses} font-medium text-sm`}>
+                  Select Year
+                </Label>
+              )}
+              <Select value={selectedYear} onValueChange={setSelectedYear}>
+                <SelectTrigger className={`${selectClasses} h-11`}>
+                  <SelectValue placeholder="Select Year" />
+                </SelectTrigger>
+                <SelectContent className={isDark ? "bg-gray-800 border-gray-600" : "bg-white"}>
+                  {years.map((year) => (
+                    <SelectItem 
+                      key={year} 
+                      value={year.toString()} 
+                      className={isDark ? "text-white hover:bg-gray-700" : "text-gray-900 hover:bg-gray-50"}
+                    >
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1">
+              {showLabels && (
+                <Label htmlFor="make" className={`${labelClasses} font-medium text-sm`}>
+                  Select Make
+                </Label>
+              )}
+              <Select
+                value={selectedBrand}
+                onValueChange={(value) => {
+                  setSelectedBrand(value)
+                  setSelectedModel("") // Reset model when brand changes
+                }}
+              >
+                <SelectTrigger className={`${selectClasses} h-11`}>
+                  <SelectValue placeholder="Select Make" />
+                </SelectTrigger>
+                <SelectContent className={`${isDark ? "bg-gray-800 border-gray-600" : "bg-white"} max-h-60`}>
+                  {Object.keys(brandModels).map((brand) => (
+                    <SelectItem 
+                      key={brand} 
+                      value={brand} 
+                      className={isDark ? "text-white hover:bg-gray-700" : "text-gray-900 hover:bg-gray-50"}
+                    >
+                      {brand}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              {showLabels && (
+                <Label htmlFor="model" className={`${labelClasses} font-medium text-sm`}>
+                  Select Model
+                </Label>
+              )}
+              <Select value={selectedModel} onValueChange={setSelectedModel} disabled={!selectedBrand}>
+                <SelectTrigger className={`${selectClasses} h-11`}>
+                  <SelectValue placeholder="Select Model" />
+                </SelectTrigger>
+                <SelectContent className={`${isDark ? "bg-gray-800 border-gray-600" : "bg-white"} max-h-60`}>
+                  {availableModels.map((model) => (
+                    <SelectItem 
+                      key={model} 
+                      value={model} 
+                      className={isDark ? "text-white hover:bg-gray-700" : "text-gray-900 hover:bg-gray-50"}
+                    >
+                      {model}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1">
+              {showLabels && (
+                <Label htmlFor="part" className={`${labelClasses} font-medium text-sm`}>
+                  Select Part
+                </Label>
+              )}
+              <Select value={selectedPart} onValueChange={setSelectedPart}>
+                <SelectTrigger className={`${selectClasses} h-11`}>
+                  <SelectValue placeholder="Select Part" />
+                </SelectTrigger>
+                <SelectContent className={`${isDark ? "bg-gray-800 border-gray-600" : "bg-white"} max-h-60`}>
+                  {parts.map((part, index) => (
+                    <SelectItem 
+                      key={index} 
+                      value={part} 
+                      className={isDark ? "text-white hover:bg-gray-700" : "text-gray-900 hover:bg-gray-50"}
+                    >
+                      {part}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+        {/* Tablet/Desktop: 1 row, 4 columns. Hidden on mobile. */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="space-y-1 sm:space-y-2">
             {showLabels && (
-              <Label htmlFor="year" className={`${labelClasses} font-medium`}>
+              <Label htmlFor="year" className={`${labelClasses} font-medium text-sm`}>
                 Select Year
               </Label>
             )}
             <Select value={selectedYear} onValueChange={setSelectedYear}>
-              <SelectTrigger className={selectClasses}>
+              <SelectTrigger className={`${selectClasses} h-11 sm:h-10`}>
                 <SelectValue placeholder="Select Year" />
               </SelectTrigger>
               <SelectContent className={isDark ? "bg-gray-800 border-gray-600" : "bg-white"}>
@@ -105,9 +211,9 @@ export function PartsSearchForm({
             </Select>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1 sm:space-y-2">
             {showLabels && (
-              <Label htmlFor="make" className={`${labelClasses} font-medium`}>
+              <Label htmlFor="make" className={`${labelClasses} font-medium text-sm`}>
                 Select Make
               </Label>
             )}
@@ -118,7 +224,7 @@ export function PartsSearchForm({
                 setSelectedModel("") // Reset model when brand changes
               }}
             >
-              <SelectTrigger className={selectClasses}>
+              <SelectTrigger className={`${selectClasses} h-11 sm:h-10`}>
                 <SelectValue placeholder="Select Make" />
               </SelectTrigger>
               <SelectContent className={`${isDark ? "bg-gray-800 border-gray-600" : "bg-white"} max-h-60`}>
@@ -135,14 +241,14 @@ export function PartsSearchForm({
             </Select>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1 sm:space-y-2">
             {showLabels && (
-              <Label htmlFor="model" className={`${labelClasses} font-medium`}>
+              <Label htmlFor="model" className={`${labelClasses} font-medium text-sm`}>
                 Select Model
               </Label>
             )}
             <Select value={selectedModel} onValueChange={setSelectedModel} disabled={!selectedBrand}>
-              <SelectTrigger className={selectClasses}>
+              <SelectTrigger className={`${selectClasses} h-11 sm:h-10`}>
                 <SelectValue placeholder="Select Model" />
               </SelectTrigger>
               <SelectContent className={`${isDark ? "bg-gray-800 border-gray-600" : "bg-white"} max-h-60`}>
@@ -159,14 +265,14 @@ export function PartsSearchForm({
             </Select>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1 sm:space-y-2">
             {showLabels && (
-              <Label htmlFor="part" className={`${labelClasses} font-medium`}>
+              <Label htmlFor="part" className={`${labelClasses} font-medium text-sm`}>
                 Select Part
               </Label>
             )}
             <Select value={selectedPart} onValueChange={setSelectedPart}>
-              <SelectTrigger className={selectClasses}>
+              <SelectTrigger className={`${selectClasses} h-11 sm:h-10`}>
                 <SelectValue placeholder="Select Part" />
               </SelectTrigger>
               <SelectContent className={`${isDark ? "bg-gray-800 border-gray-600" : "bg-white"} max-h-60`}>
@@ -185,10 +291,10 @@ export function PartsSearchForm({
         </div>
 
         {/* Contact Information Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="space-y-1 sm:space-y-2">
             {showLabels && (
-              <Label htmlFor="firstName" className={`${labelClasses} font-medium`}>
+              <Label htmlFor="firstName" className={`${labelClasses} font-medium text-sm`}>
                 First Name
               </Label>
             )}
@@ -202,9 +308,9 @@ export function PartsSearchForm({
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1 sm:space-y-2">
             {showLabels && (
-              <Label htmlFor="lastName" className={`${labelClasses} font-medium`}>
+              <Label htmlFor="lastName" className={`${labelClasses} font-medium text-sm`}>
                 Last Name
               </Label>
             )}
@@ -218,9 +324,9 @@ export function PartsSearchForm({
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1 sm:space-y-2">
             {showLabels && (
-              <Label htmlFor="email" className={`${labelClasses} font-medium`}>
+              <Label htmlFor="email" className={`${labelClasses} font-medium text-sm`}>
                 Your Email
               </Label>
             )}
@@ -234,9 +340,9 @@ export function PartsSearchForm({
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1 sm:space-y-2">
             {showLabels && (
-              <Label htmlFor="phone" className={`${labelClasses} font-medium`}>
+              <Label htmlFor="phone" className={`${labelClasses} font-medium text-sm`}>
                 Phone No
               </Label>
             )}
@@ -252,14 +358,14 @@ export function PartsSearchForm({
         </div>
 
         {/* Terms and Submit */}
-        <div className="space-y-4">
-          <p className={`text-sm ${disclaimerClasses} text-center`}>
+        <div className="space-y-3 sm:space-y-4">
+          <p className={`text-xs sm:text-sm ${disclaimerClasses} text-center px-2`}>
             By submitting this form, you agree to receive text messages at anytime
           </p>
 
           <Button
             type="submit"
-            className="w-full bg-red-600 hover:bg-red-700 text-white py-4 text-lg font-semibold"
+            className="w-full bg-red-600 hover:bg-red-700 text-white py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-md touch-manipulation"
           >
             Get Free Quote
           </Button>

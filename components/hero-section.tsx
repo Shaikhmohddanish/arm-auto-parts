@@ -3,7 +3,7 @@ import { Check } from "lucide-react"
 
 export function HeroSection() {
   return (
-    <section className="relative bg-dark text-white overflow-hidden">
+    <section className="relative bg-dark text-white overflow-hidden w-full">
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
@@ -13,7 +13,7 @@ export function HeroSection() {
       />
 
       {/* Content */}
-      <div className="relative container mx-auto px-4 py-20 lg:py-32">
+      <div className="relative container mx-auto px-4 py-20 lg:py-32 w-full max-w-7xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
           <div className="space-y-8">
@@ -54,8 +54,8 @@ export function HeroSection() {
               <img src="/images/banner slider 2.webp" alt="Auto Parts Collection" className="w-full h-auto rounded-lg" />
             </div>
             {/* Decorative elements */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-red-600 rounded-full opacity-20" />
-            <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-red-600 rounded-full opacity-30" />
+            <div className="absolute top-4 right-4 w-24 h-24 bg-red-600 rounded-full opacity-20" />
+            <div className="absolute bottom-4 left-4 w-16 h-16 bg-red-600 rounded-full opacity-30" />
           </div>
         </div>
       </div>

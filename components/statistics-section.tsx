@@ -37,7 +37,7 @@ export function StatisticsSection() {
   return (
     <section className="relative py-20 bg-gray-100">
       {/* Background car image */}
-      <div className="absolute inset-0 flex items-center justify-end pr-8">
+      <div className="absolute inset-0 flex items-center justify-end pr-8 overflow-hidden">
         <div className="relative w-1/2 h-full">
           <img
             src="/images/car-red.png"

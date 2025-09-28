@@ -55,7 +55,7 @@ export function TestimonialCarousel() {
   const currentTestimonial = testimonials[currentIndex]
 
   return (
-    <div className="mt-16 max-w-2xl">
+    <div className="mt-16 max-w-2xl w-full mx-auto">
       <div className="bg-white rounded-lg p-8 shadow-lg relative">
         <div className="flex items-center mb-4">
           <div className="flex text-yellow-400">
